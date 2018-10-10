@@ -134,7 +134,7 @@
             position: absolute;
             overflow: hidden;
             padding: 20px;
-            top: -20px;
+            /*top: -20px;*/
             border-radius: 2px;
             transition: all 0.5s;
             transform: translateY(100px);
@@ -234,7 +234,8 @@
 
         function handleEnter() {
             this.classList.add('trigger-enter');
-            setTimeout(() => this.classList.add('trigger-enter-active'), 150);
+            //add trigger enter active only if dropdown is hovered;
+            setTimeout(() => this.classList.contains('trigger-enter') && this.classList.add('trigger-enter-active'), 150);
             background.classList.add('open');
             const dropdown = this.querySelector('.dropdown');
             const navCoords = nav.getBoundingClientRect();
@@ -243,12 +244,15 @@
 
             const coords = {
                 height: dropdownCoords.height,
-                width: dropdownCoords.width
-
+                width: dropdownCoords.width,
+                top: dropdownCoords.top - navCoords.top,
+                left: dropdownCoords.left - navCoords.left
             };
 
             background.style.setProperty('width', `${coords.width}px`);
             background.style.setProperty('height', `${coords.height}px`);
+            background.style.setProperty('top', `${coords.top}px`);
+            background.style.setProperty('left', `${coords.left}px`);
         }
 
 
@@ -256,7 +260,7 @@
 
         function handleLeave() {
             this.classList.remove('trigger-enter', 'trigger-enter-active');
-
+            background.classList.remove('open');
         }
 
 
